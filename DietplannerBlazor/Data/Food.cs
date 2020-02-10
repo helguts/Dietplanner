@@ -7,12 +7,23 @@ namespace DietplannerBlazor.Data
 {
     public class Food
     {
-        public DateTime Date { get; set; }
 
-        public int TemperatureC { get; set; }
+        public Food(string name, MacroNutrients macros, MicroNutrients micros) : this(name, macros)
+        {
+            Micros = micros;
+        }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public Food(string name, MacroNutrients macros)
+        {
+            Name = name;
+            Macros = macros;
+        }
 
-        public string Summary { get; set; }
+        public string Name { get; set; }
+
+        public MacroNutrients Macros { get; set; }
+
+        public MicroNutrients Micros { get; set; }
+
     }
 }

@@ -3,9 +3,7 @@
 @using DietplannerBlazor.Data
 @inject DietplanService PlanService
 
-<p>This component demonstrates fetching data from a service.</p>
-
-@if (dietplans == null)
+@if (dietplan == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -14,20 +12,24 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Name</th>
+                <th>Menge (g)</th>
+                <th>Kalorien (kcal)</th>
+                <th>Eiweiß (g)</th>
+                <th>Kohlenhydrate (g)</th>
+                <th>Fette (g)</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var dietplan in dietplans)
+            @foreach (var foodentry in dietplan.FoodEntries)
             {
                 <tr>
-                    <td>@dietplan.Date.ToShortDateString()</td>
-                    <td>@dietplan.TemperatureC</td>
-                    <td>@dietplan.TemperatureF</td>
-                    <td>@dietplan.Summary</td>
+                    <td>@foodentry.Food.Name</td>
+                    <td>@foodentry.Quantity.ToString("0.##")</td>
+                    <td>@foodentry.Calories.ToString("0.##")</td>
+                    <td>@foodentry.Food.Macros.Proteins.ToString("0.##")</td>
+                    <td>@foodentry.Food.Macros.Carbs.ToString("0.##")</td>
+                    <td>@foodentry.Food.Macros.Fats.ToString("0.##")</td>
                 </tr>
             }
         </tbody>
@@ -35,10 +37,10 @@ else
 }
 
 @code {
-    private Dietplan[] dietplans;
+    private Dietplan dietplan;
 
     protected override async Task OnInitializedAsync()
     {
-        dietplans = await PlanService.GetForecastAsync(DateTime.Now);
+        dietplan = await PlanService.GetDietPlanAsync(DateTime.Now);
     }
 }
