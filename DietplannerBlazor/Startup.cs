@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DietplannerBlazor.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace DietplannerBlazor
 {
@@ -29,6 +30,11 @@ namespace DietplannerBlazor
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<DietplanService>();
+            services.AddDbContext<FoodDbContext>(options =>
+            {
+                options.UseSqlite("Data Source = Foods.db");
+            });
+            services.AddScoped<FoodService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

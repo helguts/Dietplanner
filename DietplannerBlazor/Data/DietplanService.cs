@@ -8,9 +8,8 @@ namespace DietplannerBlazor.Data
     public class DietplanService
     {
 
-        public Task<Dietplan> GetDietPlanAsync(DateTime startDate)
+        public Task<Dietplan> GetDietPlanAsync()
         {
-            var rng = new Random();
             var dietplan = new Dietplan()
             {
                 FoodEntries = new List<FoodEntry>()
@@ -22,5 +21,7 @@ namespace DietplannerBlazor.Data
             };
             return Task.FromResult(dietplan);
         }
+
+
     }
 }

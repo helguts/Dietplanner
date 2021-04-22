@@ -1,4 +1,4 @@
-﻿@page "/dietplan"
+﻿@page "/Dietplan"
 
 @using DietplannerBlazor.Data
 @inject DietplanService PlanService
@@ -41,6 +41,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        dietplan = await PlanService.GetDietPlanAsync(DateTime.Now);
+        dietplan = await PlanService.GetDietPlanAsync();
     }
 }

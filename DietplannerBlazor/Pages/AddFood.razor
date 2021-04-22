@@ -1,0 +1,25 @@
+﻿@using DietplannerBlazor.Data
+
+<EditForm Model="@newFood">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <InputText Id="Name" @bind-Value="@newFood.Name" class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <label for="Eiweiß">Eiweiß</label>
+        <InputNumber Id="Eiweiß" @bind-Value="@newFood.Macros.Proteins" class="form-control"></InputNumber>
+    </div>
+    <div class="form-group">
+        <label for="Kohlenhydrate">Kohlenhydrate</label>
+        <InputNumber Id="Kohlenhydrate" @bind-Value="@newFood.Macros.Carbs" class="form-control"></InputNumber>
+    </div>
+    <div class="form-group">
+        <label for="Fette">Fette</label>
+        <InputNumber Id="Fette" @bind-Value="@newFood.Macros.Fats" class="form-control"></InputNumber>
+    </div>
+</EditForm>
+
+@code {
+
+
+}

@@ -1,0 +1,60 @@
+﻿@page "/Food"
+
+@using DietplannerBlazor.Data
+@inject FoodService foodService
+
+@if (foods == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <input class="form-control mb-3 w-50" type="text" @bind-value="searchTerm" @bind-value:event="oninput" placeholder="Nach Lebensmittel suchen.." />
+    <button class="btn btn-primary" @onclick="OnAddFood">Hinzufügen</button>
+    <ModalPopup @ref="modalAddFood" OnClick="OnAddFood" Title="Lebensmittel hinzufügen">
+        <AddFood></AddFood>
+    </ModalPopup>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Kalorien (kcal)</th>
+                <th>Eiweiß (g)</th>
+                <th>Kohlenhydrate (g)</th>
+                <th>Fette (g)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var food in filteredFoods)
+            {
+                <tr>
+                    <td>@food.Name</td>
+                    <td>@food.Macros.Calories.ToString("0.##")</td>
+                    <td>@food.Macros.Proteins.ToString("0.##")</td>
+                    <td>@food.Macros.Carbs.ToString("0.##")</td>
+                    <td>@food.Macros.Fats.ToString("0.##")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<Food> foods;
+
+    protected override async Task OnInitializedAsync()
+    {
+        foods = await foodService.GetFoodsAsync();
+    }
+
+    ModalPopup modalAddFood;
+    private void OnAddFood()
+    {
+        modalAddFood.Show();
+    }
+    String searchTerm { get; set; } = "";
+    List<Food>
+        filteredFoods => foods.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower())).ToList();
+}
+
